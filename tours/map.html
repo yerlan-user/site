@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Карта присутствия</title>
+<meta name="description" content="Где присутствуют и где отсутствуют Kazunion, FUN&amp;SUN и Selfie Travel: города Казахстана и страны с собственными принимающими компаниями.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .map-wrap { position: relative; }
+  svg.map { width: 100%; height: auto; display: block; }
+  .land { fill: var(--soft); stroke: var(--muted); stroke-width: 1.2; stroke-linejoin: round; }
+  .city-lbl { font: 600 11px var(--body); fill: var(--muted); }
+  .m-kz { fill: var(--kz); stroke: var(--kz); } .m-fs { fill: var(--fs); stroke: var(--fs); } .m-sf { fill: var(--sf); stroke: var(--sf); }
+  .m-ring { fill: var(--card); stroke-width: 2.5; }
+  .m-dot { stroke: var(--card); stroke-width: 1.5; }
+  .hit { fill: transparent; cursor: pointer; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+  .filters label { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--line); background: var(--card); padding: 6px 12px; border-radius: 999px; font-size: 14px; cursor: pointer; }
+  .yes { color: var(--good); font-weight: 800; }
+  .no { color: var(--muted); }
+  .key { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .key svg { vertical-align: middle; }
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="index.html">Тур<b>операторы</b> KZ</a>
+  <nav class="tabs">
+    <a href="index.html">Обзор</a>
+    <a href="finance.html">Деньги и налоги</a>
+    <a href="history.html">Хронология и ЧП</a>
+    <a href="leadership.html">Руководство</a>
+    <a href="map.html" aria-current="page">Карта</a>
+    <a href="reviews.html">Жалобы и суды</a>
+    <a href="contacts.html">Контакты</a>
+    <a href="sources.html">Источники</a>
+  </nav>
+</div></header>
+
+<main>
+  <h1>Карта присутствия</h1>
+  <p class="lead">Где у каждого оператора есть офис, а откуда только вылеты или продажи по Казахстану. Ниже — где у них свои принимающие компании за рубежом. Карта схематичная, без точного масштаба.</p>
+
+  <div class="filters" id="filters">
+    <label><input type="checkbox" value="kz" checked> <span class="op kz">Kazunion</span></label>
+    <label><input type="checkbox" value="fs" checked> <span class="op fs">FUN&amp;SUN</span></label>
+    <label><input type="checkbox" value="sf" checked> <span class="op sf">Selfie Travel</span></label>
+  </div>
+
+  <div class="card map-wrap">
+    <svg class="map" viewBox="0 0 590 330" role="img" aria-label="Схема Казахстана с городами присутствия туроператоров">
+      <path class="land" d="M21,158 L29,134 L39,114 L49,92 L73,92 L101,98 L143,114 L182,106 L220,110 L202,88 L214,66 L218,48 L243,34 L270,34 L307,20 L324,18 L348,42 L381,46 L425,40 L439,60 L468,102 L488,106 L514,106 L535,130 L566,144 L543,154 L546,182 L508,182 L499,216 L468,226 L471,246 L479,262 L474,274 L458,270 L435,266 L401,270 L381,276 L348,282 L338,296 L316,314 L307,306 L289,302 L281,268 L254,254 L227,256 L180,216 L147,226 L147,300 L133,300 L106,284 L98,274 L86,262 L70,236 L80,226 L106,196 L92,184 L60,196 L52,198 L33,194 L46,178 L21,158 Z"/>
+      <g id="cities"></g>
+    </svg>
+    <div class="key">
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="var(--muted)"/></svg> офис / представительство</span>
+      <span><svg width="14" height="14"><circle cx="7" cy="7" r="4.5" fill="var(--card)" stroke="var(--muted)" stroke-width="2.5"/></svg> только вылеты или продажи</span>
+    </div>
+  </div>
+  <div class="tip" id="tip" role="tooltip"></div>
+
+  <h2>Города Казахстана</h2>
+  <div class="tbl-wrap">
+    <table id="city-table">
+      <thead><tr><th>Город</th><th><span class="op kz">Kazunion</span></th><th><span class="op fs">FUN&amp;SUN</span></th><th><span class="op sf">Selfie Travel</span></th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="small">«—» значит, что в найденных источниках упоминаний нет. Это не значит, что туров оттуда нет совсем: агентства продают туры всех трёх операторов по всей стране.</p>
+
+  <h2>Свои принимающие компании за рубежом</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Страна</th><th><span class="op kz">Kazunion</span></th><th><span class="op fs">FUN&amp;SUN</span></th><th><span class="op sf">Selfie Travel</span></th></tr></thead>
+      <tbody>
+        <tr><th>Турция</th><td class="yes">есть</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+        <tr><th>ОАЭ</th><td class="yes">есть</td><td class="yes">есть</td><td class="no">—</td></tr>
+        <tr><th>Катар</th><td class="yes">есть</td><td class="no">— (продаёт)</td><td class="no">—</td></tr>
+        <tr><th>Египет</th><td class="no">—</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+        <tr><th>Таиланд</th><td class="no">—</td><td class="yes">есть</td><td class="yes">есть</td></tr>
+        <tr><th>Вьетнам</th><td class="no">—</td><td class="no">— (чартер на Фукуок)</td><td class="yes">есть</td></tr>
+        <tr><th>Китай</th><td class="no">—</td><td class="no">—</td><td class="yes">есть</td></tr>
+        <tr><th>Узбекистан</th><td class="no">офис Kazunion UZ</td><td class="no">продажи</td><td class="yes">есть</td></tr>
+        <tr><th>Грузия</th><td class="yes">есть</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><th>Азербайджан</th><td class="yes">есть</td><td class="no">агентства</td><td class="no">агентства</td></tr>
+        <tr><th>Мальдивы</th><td class="yes">есть</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><th>Маврикий</th><td class="yes">есть</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><th>Россия</th><td class="yes">ООО «Тур Э Вент»</td><td class="no">отдельная компания бренда</td><td class="no">через партнёров</td></tr>
+        <tr><th>Кыргызстан</th><td class="no">—</td><td class="yes">головной офис в Бишкеке</td><td class="no">агентства</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Где пусто</h2>
+  <div class="grid3">
+    <div class="card kz"><h3><span class="op kz">Kazunion</span></h3><p>Не найдено присутствия на севере и востоке (Павлодар, Петропавловск, Усть-Каменогорск, Костанай). Нет своих служб в Египте, Таиланде и Вьетнаме, то есть в самых массовых направлениях казахстанцев.</p></div>
+    <div class="card fs"><h3><span class="op fs">FUN&amp;SUN</span></h3><p>Не найдено своего офиса в Шымкенте и Караганде. Нет своей службы в Катаре, Вьетнаме и Китае. Слабее в «экзотике» вроде Мальдив и Маврикия.</p></div>
+    <div class="card sf"><h3><span class="op sf">Selfie Travel</span></h3><p>Не найдено присутствия в Караганде, Павлодаре, Атырау, Уральске. Нет своих служб в ОАЭ и Катаре.</p></div>
+  </div>
+</main>
+<footer>Координаты городов приблизительные. Списки офисов и городов вылета собраны с сайтов агентств, 2ГИС и интервью компаний.</footer>
+
+<script>
+  // x, y — координаты на схеме; для каждого оператора: "o" — офис, "f" — вылеты/продажи, "" — нет данных
+  const cities = [
+    ["Алматы", 427, 261, "o", "o", "o", "kz: офис (Минусинская 13Б) · fs: головной офис · sf: офис"],
+    ["Астана", 354, 103, "o", "o", "o", "kz: офис · fs: офис продаж (Достык 3) · sf: офис (Туран 41/1)"],
+    ["Шымкент", 329, 280, "o", "", "o", "kz: офис · sf: головной офис, вылеты", [0, 20]],
+    ["Караганда", 376, 130, "o", "", "", "kz: офис, чартеры в Анталью"],
+    ["Актобе", 163, 120, "", "o", "", "fs: франчайзи (Dastan Center)"],
+    ["Атырау", 92, 184, "f", "f", "", "kz: чартеры · fs: город продаж"],
+    ["Уральск", 85, 101, "f", "f", "", "kz: чартеры · fs: город продаж"],
+    ["Актау", 82, 253, "", "f", "f", "fs: город продаж · sf: вылеты"],
+    ["Костанай", 249, 62, "", "", "o", "sf: офис, чартеры в Египет"],
+    ["Петропавловск", 323, 29, "", "f", "", "fs: город продаж"],
+    ["Павлодар", 427, 80, "", "f", "", "fs: город продаж"],
+    ["Усть-Каменогорск", 503, 127, "", "f", "f", "fs: город продаж · sf: чартеры в Египет"],
+    ["Тараз", 353, 268, "", "f", "f", "fs: город продаж · sf: чартеры в Египет, Фукуок", [22, 4, "start"]],
+    ["Кызылорда", 274, 229, "", "f", "", "fs: город продаж"],
+    ["Туркестан", 311, 260, "", "f", "", "fs: город продаж", [-10, -9, "end"]]
+  ];
+  const ops = ["kz", "fs", "sf"];
+  const names = { kz: "Kazunion", fs: "FUN&SUN", sf: "Selfie Travel" };
+  const NS = "http://www.w3.org/2000/svg";
+  const g = document.getElementById("cities");
+  const tip = document.getElementById("tip");
+  const tbody = document.querySelector("#city-table tbody");
+  const on = new Set(ops);
+
+  function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; }
+
+  function draw() {
+    g.replaceChildren();
+    for (const c of cities) {
+      const [name, x, y] = c;
+      const present = ops.map((k, i) => [k, c[3 + i]]).filter(([k, v]) => v && on.has(k));
+      const [dx, dy, anchor] = c[7] || [0, -9, "middle"];
+      const lbl = el("text", { x: x + dx, y: y + dy, "text-anchor": anchor || "middle", class: "city-lbl" });
+      lbl.textContent = name;
+      g.appendChild(lbl);
+      present.forEach(([k, v], i) => {
+        const cx = x + (i - (present.length - 1) / 2) * 11;
+        g.appendChild(v === "o"
+          ? el("circle", { cx, cy: y, r: 5, class: `m-${k} m-dot` })
+          : el("circle", { cx, cy: y, r: 4, class: `m-${k} m-ring` }));
+      });
+      if (!present.length) g.appendChild(el("circle", { cx: x, cy: y, r: 2.5, fill: "var(--muted)" }));
+      const hit = el("circle", { cx: x, cy: y, r: 16, class: "hit" });
+      hit.addEventListener("mousemove", e => {
+        tip.style.display = "block";
+        tip.textContent = `${name}: ${c[6].replace(/kz:/g, "Kazunion:").replace(/fs:/g, "FUN&SUN:").replace(/sf:/g, "Selfie:")}`;
+        tip.style.left = Math.min(e.clientX + 12, innerWidth - 270) + "px";
+        tip.style.top = (e.clientY + 14) + "px";
+      });
+      hit.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+      g.appendChild(hit);
+    }
+  }
+
+  const label = { o: "офис", f: "вылеты / продажи", "": "—" };
+  for (const c of cities) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<th>${c[0]}</th>` + [3, 4, 5].map(i => `<td class="${c[i] ? "yes" : "no"}">${label[c[i]]}</td>`).join("");
+    tbody.appendChild(tr);
+  }
+
+  document.getElementById("filters").addEventListener("change", e => {
+    e.target.checked ? on.add(e.target.value) : on.delete(e.target.value);
+    draw();
+  });
+  draw();
+</script>
+</body>
+</html>
