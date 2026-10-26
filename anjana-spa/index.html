@@ -6,6 +6,7 @@
 <title>Anjana Spa Rixos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Anjana Spa в отеле Rixos President Astana: бассейн, хаммам, сауны, массаж и тренажёрный зал. Услуги, виртуальный тур, контакты и как добраться.">
+<link rel="alternate" hreflang="tr" href="tr/">
 <meta property="og:title" content="Anjana Spa · Rixos President Astana">
 <meta property="og:description" content="Бассейн, хаммам, сауны, массаж и тренажёрный зал в самом центре Астаны.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,11 +91,17 @@
   .nav ul { display: flex; gap: 22px; list-style: none; margin: 0 0 0 auto; padding: 0; }
   .nav ul a { text-decoration: none; font-size: 14px; color: var(--on-deep-muted); transition: color .2s; }
   .nav ul a:hover { color: var(--on-deep); }
+  .nav .lang {
+    text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: .08em;
+    color: var(--on-deep-muted); padding: 6px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px;
+  }
+  .nav .lang:hover { color: var(--on-deep); border-color: var(--brass-light); }
   .nav .call {
     text-decoration: none; font-size: 14px; font-weight: 600; white-space: nowrap;
     padding: 8px 16px; border-radius: 999px; background: var(--brass-light); color: #1a1408;
   }
-  @media (max-width: 900px) { .nav ul { display: none; } .nav .call { margin-left: auto; } }
+  @media (max-width: 900px) { .nav ul { display: none; } .nav .lang { margin-left: auto; } }
+  @media (max-width: 520px) { .nav .wrap { gap: 10px; } .logo small { display: none; } .nav .call { padding: 8px 12px; font-size: 13px; } }
 
   /* ---------- Герой ---------- */
   .hero { position: relative; background: var(--deep); color: var(--on-deep); overflow: hidden; padding-block: 0; }
@@ -315,6 +322,7 @@
       <li><a href="#gallery">Фото</a></li>
       <li><a href="#contacts">Контакты</a></li>
     </ul>
+    <a class="lang" href="tr/" hreflang="tr" lang="tr" title="Türkçe sürüm">TR</a>
     <a class="call" href="tel:+77172245050">+7 7172 24-50-50</a>
   </div>
 </nav>
