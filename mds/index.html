@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>МДС Сервис Плюс</title>
+<meta name="description" content="Медицинский центр «МДС Сервис Плюс» в Астане, пер. Ташенова, 4: врачи, режим работы, как добраться, история и сведения о компании.">
+<meta property="og:title" content="МДС Сервис Плюс — медицинский центр в Астане">
+<meta property="og:description" content="Пер. Жумабека Ташенова, 4. Врачи, режим работы, цены, как добраться.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Справочная страница о клинике: шапка с главными фактами, затем разделы-карточки. Стиль повторяет главную страницу сайта. */
+  :root {
+    --bg: #f3f6f7; --card: #ffffff; --text: #12191c; --muted: #5d6b70;
+    --line: #dde5e8; --accent: #0a9a8a; --accent-soft: #e3f4f1; --gold: #f2b705;
+    --shadow: 0 1px 2px rgba(10,40,50,.05), 0 8px 24px rgba(10,40,50,.06);
+    --display: Unbounded, "Arial Black", system-ui, sans-serif;
+    --body: Manrope, system-ui, -apple-system, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1316; --card: #151d21; --text: #eef3f5; --muted: #93a3a9;
+      --line: #233035; --accent: #2fc9b6; --accent-soft: #12302c; --gold: #f5c430; --shadow: none; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1316; --card: #151d21; --text: #eef3f5; --muted: #93a3a9;
+    --line: #233035; --accent: #2fc9b6; --accent-soft: #12302c; --gold: #f5c430; --shadow: none; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  main { max-width: 760px; margin: 0 auto; padding-block: 28px 64px; }
+  a { color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  header.hero {
+    background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow);
+    padding: 28px 24px; border-bottom: 4px solid var(--accent); margin-bottom: 20px;
+  }
+  .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent);
+    background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; }
+  .badge svg { width: 14px; height: 14px; fill: currentColor; }
+  h1 { font-family: var(--display); font-size: clamp(26px, 6vw, 36px); font-weight: 700; margin: 14px 0 6px; letter-spacing: -.01em; text-wrap: balance; }
+  .lead { color: var(--muted); margin: 0 0 20px; max-width: 56ch; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .fact { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+  .fact .k { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+  .fact .v { font-weight: 700; margin-top: 2px; }
+  .fact .v a { color: inherit; text-decoration: none; }
+  .fact .v a:hover { color: var(--accent); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; font-weight: 700;
+    text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--card); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  :root[data-theme="dark"] .btn.primary { color: #06201d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #06201d; } }
+  .btn:hover { border-color: var(--accent); }
+
+  nav.toc { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 12px; margin-bottom: 8px; scrollbar-width: none; }
+  nav.toc a { flex: none; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none;
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+  nav.toc a:hover { color: var(--accent); border-color: var(--accent); }
+
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow);
+    padding: 22px 24px; margin-top: 16px; scroll-margin-top: 12px; }
+  h2 { font-family: var(--display); font-size: 20px; font-weight: 600; margin: 0 0 12px; }
+  h3 { font-size: 16px; margin: 18px 0 6px; }
+  p { margin: 0 0 10px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td.num { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  .doctors { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .doc { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; gap: 12px; align-items: flex-start; }
+  .avatar { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+  .doc .n { font-weight: 700; line-height: 1.3; }
+  .doc .s { font-size: 14px; color: var(--muted); }
+  .doc .c { font-size: 13px; margin-top: 4px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 14px; padding: 6px 12px; border-radius: 999px; background: var(--accent-soft); }
+
+  ol.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--line); }
+  ol.timeline li { position: relative; padding: 0 0 16px 18px; }
+  ol.timeline li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--card); border: 2px solid var(--accent); }
+  ol.timeline .y { font-weight: 700; }
+
+  .map { width: 100%; aspect-ratio: 16 / 10; border: 0; border-radius: 14px; background: var(--line); margin: 6px 0 12px; }
+  .note { border-left: 3px solid var(--gold); background: var(--bg); padding: 10px 14px; border-radius: 0 10px 10px 0; font-size: 14px; color: var(--muted); }
+  dl.legal { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+  dl.legal dt { color: var(--muted); }
+  dl.legal dd { margin: 0; font-weight: 600; }
+  @media (max-width: 480px) {
+    section, header.hero { padding: 18px 16px; }
+    dl.legal { grid-template-columns: 1fr; gap: 0; }
+    dl.legal dd { margin-bottom: 8px; }
+  }
+  ul.sources { padding-left: 18px; margin: 0; }
+  ul.sources li { margin-bottom: 4px; overflow-wrap: anywhere; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 36px; }
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <span class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z"/></svg>Медицинский диагностический центр · Астана</span>
+    <h1>МДС Сервис Плюс</h1>
+    <p class="lead">Многопрофильный частный медцентр на правом берегу Астаны. Работает с 2005 года, принимает взрослых и детей: приём специалистов, УЗИ (в том числе 4D), ЭКГ, лаборатория и дневной стационар.</p>
+    <div class="facts">
+      <div class="fact"><div class="k">Адрес</div><div class="v">пер. Жумабека Ташенова, 4, 1 этаж</div></div>
+      <div class="fact"><div class="k">Режим работы</div><div class="v">Ежедневно, 09:00–21:00</div></div>
+      <div class="fact"><div class="k">Телефон</div><div class="v"><a href="tel:+77172567878">+7 (7172) 56-78-78</a></div></div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="tel:+77172567878">Позвонить</a>
+      <a class="btn" href="https://mdsservis.kz/" target="_blank" rel="noopener">Официальный сайт</a>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Разделы">
+    <a href="#hours">Режим</a><a href="#doctors">Врачи</a><a href="#services">Услуги</a><a href="#prices">Цены</a>
+    <a href="#route">Как добраться</a><a href="#history">История</a><a href="#owner">Владелец</a><a href="#sources">Источники</a>
+  </nav>
+
+  <section id="hours">
+    <h2>Режим работы и контакты</h2>
+    <table>
+      <tr><td>Понедельник — воскресенье</td><td class="num">09:00 – 21:00</td></tr>
+      <tr><td>Праздничные дни</td><td class="num">работает</td></tr>
+      <tr><td>Приём</td><td>по предварительной записи</td></tr>
+    </table>
+    <h3>Телефоны</h3>
+    <p>
+      <a href="tel:+77172567878">+7 (7172) 56-78-78</a> — регистратура<br>
+      <a href="tel:+77015256165">+7 (701) 525-61-65</a><br>
+      <a href="tel:+77022860109">+7 (702) 286-01-09</a>
+    </p>
+    <p class="note">Справочники называют разное время закрытия: 21:00 в большинстве каталогов, 20:00 на Яндекс Картах. Если идёте вечером, лучше сначала позвонить в регистратуру.</p>
+  </section>
+
+  <section id="doctors">
+    <h2>Кто принимает: врачи центра</h2>
+    <p class="muted small">Список составлен по открытым профилям врачей на MedElement (на этой платформе работает сайт клиники) и i-teka. Всего в центре примерно 24 врача, здесь перечислены те, чьи профили опубликованы. Расписание конкретного врача уточняйте в регистратуре.</p>
+    <div class="doctors" id="doctor-list"></div>
+  </section>
+
+  <section id="services">
+    <h2>Услуги и диагностика</h2>
+    <h3>Диагностика</h3>
+    <div class="chips">
+      <span class="chip">УЗИ</span><span class="chip">УЗИ 4D при беременности</span><span class="chip">ЭКГ с расшифровкой</span>
+      <span class="chip">Эндоскопия</span><span class="chip">Видеокольпоскопия</span><span class="chip">Видеориноотоскопия</span><span class="chip">ЭхоЭГ</span>
+    </div>
+    <h3>Направления приёма</h3>
+    <div class="chips">
+      <span class="chip">Терапия / общая практика</span><span class="chip">Кардиология</span><span class="chip">Гинекология, детская гинекология</span>
+      <span class="chip">Эндокринология</span><span class="chip">Урология и андрология</span><span class="chip">Дерматовенерология</span>
+      <span class="chip">Гепатология, инфекционные болезни</span><span class="chip">ЛОР</span><span class="chip">Педиатрия</span>
+    </div>
+    <h3>Также в центре</h3>
+    <div class="chips">
+      <span class="chip">Лабораторные анализы</span><span class="chip">Дневной стационар</span><span class="chip">Аптека</span>
+    </div>
+  </section>
+
+  <section id="prices">
+    <h2>Примеры цен</h2>
+    <table>
+      <thead><tr><th>Услуга</th><th>Цена</th></tr></thead>
+      <tbody>
+        <tr><td>Первичный приём кардиолога</td><td class="num">8 000 ₸</td></tr>
+        <tr><td>Первичный приём уролога-андролога</td><td class="num">8 000 ₸</td></tr>
+        <tr><td>Первичный приём терапевта</td><td class="num">7 000 ₸</td></tr>
+        <tr><td>ЭКГ с расшифровкой</td><td class="num">3 000 ₸</td></tr>
+        <tr><td>УЗИ органов малого таза</td><td class="num">4 000 ₸</td></tr>
+        <tr><td>УЗИ молочных желёз</td><td class="num">4 500 ₸</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Цены взяты с сайта клиники и из каталогов. Они могут меняться, полный актуальный прайс есть на <a href="https://mdsservis.kz/" target="_blank" rel="noopener">mdsservis.kz</a>.</p>
+  </section>
+
+  <section id="route">
+    <h2>Как добраться</h2>
+    <p>Центр стоит в переулке Жумабека Ташенова, дом 4, на правом берегу, в старой части города. Вход с 1 этажа.</p>
+    <iframe class="map" title="Карта: пер. Ташенова, 4" loading="lazy"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=71.4296%2C51.1508%2C71.4436%2C51.1570&amp;layer=mapnik&amp;marker=51.153881%2C71.436573"></iframe>
+    <div class="actions" style="margin-top:0">
+      <a class="btn" href="https://2gis.kz/astana/firm/70000001018130407" target="_blank" rel="noopener">Открыть в 2ГИС</a>
+      <a class="btn" href="https://yandex.kz/maps/?pt=71.436573,51.153881&amp;z=17&amp;l=map" target="_blank" rel="noopener">Яндекс Карты</a>
+      <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=51.153881,71.436573" target="_blank" rel="noopener">Маршрут в Google</a>
+    </div>
+    <h3>Советы</h3>
+    <p><b>Общественный транспорт.</b> Постройте маршрут в 2ГИС: приложение покажет ближайшие остановки и автобусы, которые сейчас ходят. Схемы маршрутов в Астане часто меняются из-за ремонтов, поэтому номера автобусов здесь не указаны.</p>
+    <p><b>На машине или такси.</b> В навигаторе укажите «переулок Жумабека Ташенова, 4» или координаты <b>51.153881, 71.436573</b>. Сам переулок временами закрывают на ремонт, тогда подъезжайте с соседних улиц.</p>
+  </section>
+
+  <section id="history">
+    <h2>История</h2>
+    <ol class="timeline">
+      <li><div class="y">Апрель 2005</div>В Астане регистрируют ТОО «МДС Сервис Плюс». Основной вид деятельности по ОКЭД: 86210, общая врачебная практика. С этого же года центр ведёт отсчёт своей работы.</li>
+      <li><div class="y">2005 — 2010-е</div>Центр растёт от амбулаторного приёма до многопрофильной клиники. Появляются диагностическое отделение (УЗИ, ЭКГ, эндоскопия), лаборатория и дневной стационар.</li>
+      <li><div class="y">Наши дни</div>Около двух десятков врачей, многие с высшей категорией и стажем 20–40 лет. Есть УЗИ 4D для беременных, работа без выходных и онлайн-запись через MedElement. На TopDoc у центра 4,9 по 137 отзывам, на iDoctor 4,7 по 89 отзывам.</li>
+    </ol>
+    <p class="note">Подробной официальной истории клиника не публикует. Даты взяты из госреестра юрлиц и из описания на сайте центра.</p>
+  </section>
+
+  <section id="owner">
+    <h2>Кому принадлежит</h2>
+    <dl class="legal">
+      <dt>Юрлицо</dt><dd>ТОО «МДС СЕРВИС ПЛЮС»</dd>
+      <dt>БИН</dt><dd>050440024525</dd>
+      <dt>Дата регистрации</dt><dd>апрель 2005 года</dd>
+      <dt>Руководитель</dt><dd>Толбаева Раушан Батырбаевна</dd>
+      <dt>Юр. адрес</dt><dd>г. Астана, район Байконыр</dd>
+      <dt>Статус</dt><dd>действующее</dd>
+    </dl>
+    <p class="note" style="margin-top:14px">Руководитель указан по открытым реестрам контрагентов. Учредителей (собственников долей) публичные сервисы скрывают, поэтому на этой странице они не названы. Официальную выписку можно получить на <a href="https://egov.kz/" target="_blank" rel="noopener">egov.kz</a> по БИН.</p>
+  </section>
+
+  <section id="sources">
+    <h2>Источники</h2>
+    <ul class="sources small">
+      <li><a href="https://mdsservis.kz/" target="_blank" rel="noopener">mdsservis.kz</a>: официальный сайт клиники, описание и цены</li>
+      <li><a href="https://company.medelement.com/specialists/411685611413959722" target="_blank" rel="noopener">MedElement</a>: врачи и специалисты</li>
+      <li><a href="https://2gis.kz/astana/firm/70000001018130407" target="_blank" rel="noopener">2ГИС</a>: адрес и отзывы</li>
+      <li><a href="https://www.topdoc.kz/astana/clinics/281-mds-servis-plyus-meditsinskiy-tsentr/" target="_blank" rel="noopener">TopDoc</a> и <a href="https://idoctor.kz/astana/medcenter/1116-meditsinskiy-tsentr-mds-servis-plyus" target="_blank" rel="noopener">iDoctor</a>: рейтинг и описание</li>
+      <li><a href="https://i-teka.kz/astana/medcentr/mds-servis-mds-servis-plyus-per-zhumabeka-tashenova-4" target="_blank" rel="noopener">i-teka</a>: цены на приём</li>
+      <li><a href="https://niac.kz/050440024525" target="_blank" rel="noopener">niac.kz</a>, <a href="https://ba.prg.kz/710000000-astana/050440024525-too-mds-servis-plyus/" target="_blank" rel="noopener">prg.kz</a>: регистрационные данные ТОО</li>
+    </ul>
+    <p class="muted small" style="margin-top:10px">Это независимая справочная страница, а не официальный сайт клиники. Данные собраны в октябре 2026 года.</p>
+  </section>
+
+  <footer><a href="/">← sakenov.kz</a></footer>
+</main>
+
+<script>
+  // ===== Список врачей: редактируйте здесь =====
+  const DOCTORS = [
+    { name: "Какжанова Гульнар Айдархановна", spec: "Врач общей практики, терапевт", cat: "Высшая категория · стаж 41 год" },
+    { name: "Абсеметова Рабига Дюсенбаевна", spec: "Кардиолог", cat: "Высшая категория · стаж около 40 лет" },
+    { name: "Естаева Виктория Викторовна", spec: "Гинеколог, детский гинеколог, эндокринолог, врач УЗИ", cat: "Первая категория · стаж 17 лет" },
+    { name: "Кулик Александр Дмитриевич", spec: "Врач УЗИ", cat: "Высшая категория" },
+    { name: "Алгожин Берик Балташевич", spec: "Уролог, андролог, венеролог", cat: "Высшая категория · стаж 19 лет" },
+    { name: "Абдуллаев Кенесбай Пиржанович", spec: "Уролог-андролог", cat: "" },
+    { name: "Стегний Степан Александрович", spec: "Дерматовенеролог", cat: "Высшая категория" },
+    { name: "Калиева Гулжан Нурмухаметовна", spec: "Дерматовенеролог", cat: "" },
+    { name: "Симонавичиене О. И.", spec: "Гепатолог, инфекционист", cat: "" },
+    { name: "Кадылова Е. Ж.", spec: "Оториноларинголог (ЛОР)", cat: "" },
+    { name: "Суйналин А. М.", spec: "Врач общей практики", cat: "" },
+    { name: "Байсеитова Р. С.", spec: "Врач общей практики", cat: "" },
+  ];
+  // =============================================
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const initials = n => n.split(/\s+/).slice(0, 2).map(w => w[0]).join("");
+  document.getElementById("doctor-list").innerHTML = DOCTORS.map(d => `
+    <div class="doc">
+      <span class="avatar" aria-hidden="true">${esc(initials(d.name))}</span>
+      <div><div class="n">${esc(d.name)}</div><div class="s">${esc(d.spec)}</div>${d.cat ? `<div class="c">${esc(d.cat)}</div>` : ""}</div>
+    </div>`).join("");
+</script>
+</body>
+</html>
