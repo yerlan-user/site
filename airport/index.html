@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Новости аэропорта Астаны</title>
+<meta name="description" content="Новости из Instagram международного аэропорта Нурсултан Назарбаев">
+<meta property="og:title" content="Новости аэропорта Астаны">
+<meta property="og:image" content="https://sakenov.kz/cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Та же колонка и палитра, что на главной: лента карточек «картинка + текст». */
+  :root {
+    --bg: #f3f6f7; --card: #ffffff; --text: #12191c; --muted: #5d6b70;
+    --line: #dde5e8; --sky: #00a3bd; --gold: #f2b705;
+    --shadow: 0 1px 2px rgba(10,40,50,.05), 0 8px 24px rgba(10,40,50,.06);
+    --display: Unbounded, "Arial Black", system-ui, sans-serif;
+    --body: Manrope, system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1316; --card: #151d21; --text: #eef3f5; --muted: #93a3a9;
+      --line: #233035; --sky: #2cc3dc; --gold: #f5c430; --shadow: none; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1316; --card: #151d21; --text: #eef3f5; --muted: #93a3a9;
+    --line: #233035; --sky: #2cc3dc; --gold: #f5c430; --shadow: none; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text); font-family: var(--body); font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  main { max-width: 540px; margin: 0 auto; padding-block: 24px 64px; }
+  .back { display: inline-block; color: var(--muted); text-decoration: none; font-size: 14px; margin-bottom: 20px; }
+  .back:hover { color: var(--sky); }
+  header { margin-bottom: 28px; border-bottom: 4px solid var(--gold); padding-bottom: 16px; }
+  h1 { font-family: var(--display); font-size: 24px; font-weight: 700; margin: 0 0 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .sub { color: var(--muted); margin: 0; line-height: 1.5; font-size: 15px; }
+  .sub a { color: var(--sky); }
+  .feed { display: grid; gap: 18px; }
+  article {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .pics { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; background: var(--line); }
+  .pics img {
+    flex: none; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; scroll-snap-align: start; display: block;
+  }
+  .count { color: var(--muted); font-size: 12px; padding: 8px 16px 0; }
+  .body { padding: 14px 16px 16px; }
+  .text { margin: 0; line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; }
+  .text.clamp { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+  .more { background: none; border: 0; padding: 0; margin-top: 6px; color: var(--sky); font: inherit; font-weight: 600; cursor: pointer; }
+  .foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; color: var(--muted); font-size: 13px; }
+  .foot a { color: var(--sky); text-decoration: none; font-weight: 600; }
+  .empty { color: var(--muted); text-align: center; padding: 40px 0; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 48px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← sakenov.kz</a>
+  <header>
+    <h1>Новости аэропорта Астаны</h1>
+    <p class="sub" id="sub">Международный аэропорт Нурсултан Назарбаев · лента из Instagram, обновляется каждый час</p>
+  </header>
+  <div class="feed" id="feed"></div>
+  <p class="empty" id="empty" hidden>Новостей пока нет — лента появится после первого обновления.</p>
+  <footer>Публикации принадлежат аэропорту и показаны со ссылкой на оригинал в Instagram.</footer>
+</main>
+
+<script>
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fmt = new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Almaty" });
+
+  function card(p) {
+    const pics = p.images.length
+      ? `<div class="pics">${p.images.map((src, i) =>
+          `<img src="${esc(src)}" alt="Фото к публикации${p.images.length > 1 ? `, ${i + 1} из ${p.images.length}` : ""}" loading="lazy">`).join("")}</div>
+         ${p.images.length > 1 ? `<div class="count">${p.images.length} фото · листайте →</div>` : ""}`
+      : "";
+    const date = p.date ? fmt.format(new Date(p.date)) : "";
+    return `<article>${pics}<div class="body">
+      ${p.text ? `<p class="text clamp">${esc(p.text)}</p><button class="more" hidden>Читать полностью</button>` : ""}
+      <div class="foot"><span>${esc(date)}</span>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">В Instagram →</a>` : ""}</div>
+    </div></article>`;
+  }
+
+  fetch("posts.json", { cache: "no-cache" })
+    .then(r => r.json())
+    .then(data => {
+      const { account = {}, posts = [] } = data;
+      if (account.username) {
+        document.getElementById("sub").innerHTML =
+          `${esc(account.name || "Международный аэропорт Нурсултан Назарбаев")} · лента из <a href="https://www.instagram.com/${encodeURIComponent(account.username)}/" target="_blank" rel="noopener">@${esc(account.username)}</a>, обновляется каждый час`;
+      }
+      if (!posts.length) { document.getElementById("empty").hidden = false; return; }
+      const feed = document.getElementById("feed");
+      feed.innerHTML = posts.map(card).join("");
+      feed.querySelectorAll(".text").forEach(t => {
+        const btn = t.nextElementSibling;
+        if (t.scrollHeight > t.clientHeight + 2) {
+          btn.hidden = false;
+          btn.onclick = () => { t.classList.remove("clamp"); btn.hidden = true; };
+        }
+      });
+    })
+    .catch(() => { document.getElementById("empty").hidden = false; });
+</script>
+</body>
+</html>
