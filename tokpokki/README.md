@@ -1,6 +1,6 @@
 # ToKpokki Go — меню и заказ со стола
 
-Страница: https://sakenov.kz/tokpokki/ (`?table=7` подставляет номер стола).
+Страница: https://claude.ai/artifact/AmJmNvCqyhgQRUYGmFVZMW (Artifact; доступ задаётся кнопкой Share). Номер стола: `...#t7`.
 
 - `menu.js` — меню и цены, правятся вручную.
 - `config.js` — WhatsApp кассы и ссылка оплаты Kaspi (`kaspiUrl`).
