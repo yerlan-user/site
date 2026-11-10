@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ToKpokki Go — меню и заказ</title>
+<meta name="description" content="Меню корейской кухни ToKpokki Go на Пушкина, 9. Закажите и оплатите со своего стола.">
+<meta name="theme-color" content="#E8532B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23E8532B'/%3E%3Ctext x='32' y='43' font-size='34' text-anchor='middle'%3E%F0%9F%8D%9C%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#FFF4E6; --card:#FFFFFF; --ink:#3B2418; --muted:#8A6F5E; --line:#F0DCC6;
+  --brand:#E8532B; --brand-d:#C93F1B; --sun:#FFB547; --ok:#2E9E5B;
+  --shadow:0 4px 18px rgba(120,60,20,.10);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#1F1511; --card:#2B1E18; --ink:#FBEBDD; --muted:#B79C89; --line:#432F25; --shadow:0 4px 18px rgba(0,0,0,.35)}
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+[hidden]{display:none!important}
+button{font:inherit;color:inherit;cursor:pointer}
+header{background:linear-gradient(160deg,#F2683F,#E8532B 55%,#D9431F);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 16px 22px;position:relative;overflow:hidden}
+header:before,header:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.10)}
+header:before{width:180px;height:180px;right:-50px;top:-60px}
+header:after{width:120px;height:120px;right:60px;bottom:-70px;background:rgba(255,181,71,.25)}
+.brand{font-weight:800;font-size:26px;letter-spacing:.2px;position:relative}
+.brand small{display:block;font-weight:500;font-size:13px;opacity:.9;margin-top:2px}
+.table-pill{position:relative;margin-top:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border-radius:999px;padding:8px 14px;font-weight:600}
+.table-pill input{width:54px;border:0;border-radius:8px;padding:5px 6px;font:inherit;font-weight:700;text-align:center;color:#3B2418}
+nav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.seg{display:flex;gap:8px;padding:10px 16px 4px}
+.seg button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:8px 16px 12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex:none;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600;white-space:nowrap}
+.chips a.on{background:var(--brand);border-color:var(--brand);color:#fff}
+main{padding:6px 16px}
+section h2{font-size:21px;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+.item{background:var(--card);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+.item .t{flex:1;min-width:0}
+.item b{display:block;font-size:16px;font-weight:700}
+.item p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.price{margin-top:8px;font-weight:800;color:var(--brand)}
+.add{flex:none;align-self:center;width:42px;height:42px;border-radius:14px;border:0;background:var(--brand);color:#fff;font-size:26px;line-height:1;display:grid;place-items:center}
+.add:active{background:var(--brand-d)}
+.qty{flex:none;align-self:center;display:flex;align-items:center;gap:2px;background:var(--bg);border-radius:14px;padding:3px}
+.qty button{width:36px;height:36px;border:0;border-radius:11px;background:var(--card);font-size:20px;font-weight:700;color:var(--brand)}
+.qty span{min-width:24px;text-align:center;font-weight:800}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 35%)}
+.cartbtn{width:100%;border:0;border-radius:18px;background:var(--brand);color:#fff;padding:15px 18px;font-weight:800;font-size:17px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 24px rgba(232,83,43,.4)}
+.cartbtn i{font-style:normal;background:rgba(255,255,255,.25);border-radius:999px;padding:2px 10px;font-size:14px;margin-right:8px}
+.sheet-bg{position:fixed;inset:0;background:rgba(30,15,5,.55);z-index:40}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg);border-radius:24px 24px 0 0;max-height:92vh;overflow:auto;padding:18px 16px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+.sheet h3{margin:0 0 12px;font-size:20px;display:flex;justify-content:space-between;align-items:center}
+.x{border:0;background:var(--card);width:36px;height:36px;border-radius:12px;font-size:18px}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row .n{flex:1;min-width:0}.row .n small{display:block;color:var(--muted)}
+.row .s{font-weight:700;min-width:70px;text-align:right}
+.total{display:flex;justify-content:space-between;font-size:20px;font-weight:800;margin:14px 0}
+label.f{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+.sheet input[type=text],.sheet input[type=number],.sheet textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:11px 12px;font:inherit}
+.btn{display:flex;width:100%;justify-content:center;align-items:center;gap:8px;border:0;border-radius:16px;padding:15px;font-weight:800;font-size:16px;margin-top:10px;text-decoration:none}
+.btn.kaspi{background:#F14635;color:#fff}
+.btn.send{background:var(--ok);color:#fff}
+.btn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn[disabled]{opacity:.45}
+.note{font-size:13px;color:var(--muted);margin:8px 0 0}
+.steps{counter-reset:s;margin:14px 0 0;padding:0;list-style:none}
+.steps li{counter-increment:s;display:flex;gap:10px;margin:8px 0;font-size:14px}
+.steps li:before{content:counter(s);flex:none;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-weight:800;display:grid;place-items:center;font-size:13px}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.opts label{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:5px 10px;font-size:13px;font-weight:600}
+.opts input{margin-right:5px}
+footer{padding:26px 16px;text-align:center;color:var(--muted);font-size:13px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;z-index:60;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">ToKpokki Go<small id="addr"></small></div>
+  <label class="table-pill">Мой стол №
+    <input id="table" type="number" inputmode="numeric" min="1" max="99" placeholder="—" aria-label="Номер стола">
+  </label>
+</header>
+<nav>
+  <div class="seg" id="seg">
+    <button data-k="all" aria-pressed="true">Всё</button>
+    <button data-k="kitchen" aria-pressed="false">Кухня</button>
+    <button data-k="bar" aria-pressed="false">Бар</button>
+  </div>
+  <div class="chips" id="chips"></div>
+</nav>
+<main id="menu"></main>
+<footer>Цены в тенге ₸ · Меню может меняться<br><span id="hrs"></span></footer>
+
+<div class="bar" id="bar" hidden>
+  <button class="cartbtn" id="open"><span><i id="cnt">0</i>Корзина</span><span id="sum">0 ₸</span></button>
+</div>
+
+<div id="layer" hidden>
+  <div class="sheet-bg" id="bg"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label="Корзина">
+    <h3><span id="stitle">Ваш заказ</span><button class="x" id="close" aria-label="Закрыть">✕</button></h3>
+    <div id="rows"></div>
+    <div class="total"><span>Итого</span><span id="tot">0 ₸</span></div>
+    <label class="f" for="t2">Номер стола</label>
+    <input id="t2" type="number" inputmode="numeric" min="1" max="99" placeholder="Например, 7">
+    <label class="f" for="name">Ваше имя (необязательно)</label>
+    <input id="name" type="text" placeholder="Чтобы окликнуть заказ">
+    <label class="f" for="cm">Пожелания</label>
+    <textarea id="cm" rows="2" placeholder="Например: не острое"></textarea>
+
+    <div id="pay">
+      <button class="btn kaspi" id="kaspi" hidden>Оплатить Kaspi</button>
+      <button class="btn send" id="send" disabled>Отправить заказ</button>
+      <button class="btn alt" id="cash" hidden>Оплачу на кассе — отправить заказ</button>
+      <p class="note" id="paynote"></p>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="config.js"></script>
+<script src="menu.js"></script>
+<script>
+(function(){
+var C=window.CONFIG,M=window.MENU,$=function(i){return document.getElementById(i)};
+var fmt=function(n){return n.toLocaleString("ru-RU").replace(/ /g," ")+" ₸"};
+var KEY="tokpokki_cart_v1",cart={},kind="all",paid=false;
+try{cart=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){cart={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(cart))}catch(e){}}
+$("addr").textContent=C.address;$("hrs").textContent=C.address+" · "+C.hours;
+
+/* стол из QR: ?table=7 */
+var qs=new URLSearchParams(location.search),tb=qs.get("table")||qs.get("t");
+try{tb=tb||localStorage.getItem("tokpokki_table")||""}catch(e){}
+if(tb){$("table").value=tb;$("t2").value=tb}
+function setTable(v){$("table").value=v;$("t2").value=v;try{localStorage.setItem("tokpokki_table",v)}catch(e){}}
+$("table").oninput=function(){setTable(this.value)};$("t2").oninput=function(){setTable(this.value)};
+
+/* позиции */
+var items={};
+M.forEach(function(c,ci){c.items.forEach(function(it,ii){items[ci+"-"+ii]={id:ci+"-"+ii,name:it[0],price:it[1],desc:it[2],opts:it[3]||null,cat:c}})});
+function key(id,opt){return opt?id+"|"+opt:id}
+
+function render(){
+  var h="",ch="";
+  M.forEach(function(c,ci){
+    if(kind!=="all"&&c.k!==kind)return;
+    ch+='<a href="#c-'+c.id+'" data-id="'+c.id+'">'+c.e+" "+c.n+"</a>";
+    h+='<section id="c-'+c.id+'"><h2><span>'+c.e+"</span>"+c.n+"</h2>";
+    c.items.forEach(function(it,ii){
+      var id=ci+"-"+ii;
+      h+='<div class="item" data-id="'+id+'"><div class="t"><b>'+esc(it[0])+"</b>"+(it[2]?"<p>"+esc(it[2])+"</p>":"")+'<div class="price">'+fmt(it[1])+"</div>";
+      if(it[3]){h+='<div class="opts">'+it[3].map(function(o,k){return '<label><input type="radio" name="o'+id+'" value="'+esc(o)+'"'+(k?"":" checked")+">"+esc(o)+"</label>"}).join("")+"</div>"}
+      h+='</div><span class="ctl"></span></div>';
+    });
+    h+="</section>";
+  });
+  $("menu").innerHTML=h;$("chips").innerHTML=ch;
+  document.querySelectorAll(".item").forEach(paint);
+  spy();
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function curOpt(el){var r=el.querySelector("input:checked");return r?r.value:""}
+function qtyOf(id){var s=0;for(var k in cart){if(k.split("|")[0]===id)s+=cart[k].q}return s}
+function paint(el){
+  var id=el.dataset.id,q=qtyOf(id),ctl=el.querySelector(".ctl");
+  if(!q){ctl.outerHTML='<button class="add ctl" aria-label="Добавить">+</button>'}
+  else{ctl.outerHTML='<span class="qty ctl"><button data-a="-" aria-label="Меньше">−</button><span>'+q+'</span><button data-a="+" aria-label="Больше">+</button></span>'}
+}
+$("menu").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  var el=b.closest(".item"),id=el.dataset.id,it=items[id],opt=it.opts?curOpt(el):"",k=key(id,opt);
+  if(b.classList.contains("add")||b.dataset.a==="+"){cart[k]=cart[k]||{id:id,opt:opt,q:0};cart[k].q++}
+  else if(b.dataset.a==="-"){
+    var kk=k;if(!cart[kk]){for(var x in cart){if(x.split("|")[0]===id){kk=x;break}}}
+    if(cart[kk]){cart[kk].q--;if(cart[kk].q<=0)delete cart[kk]}
+  }else return;
+  paid=false;save();paint(el);bar();
+});
+
+/* фильтры */
+$("seg").onclick=function(e){var b=e.target.closest("button");if(!b)return;kind=b.dataset.k;
+  document.querySelectorAll("#seg button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});render();window.scrollTo(0,0)};
+function spy(){
+  var links=document.querySelectorAll("#chips a");
+  if(!("IntersectionObserver" in window))return;
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){
+    links.forEach(function(a){a.classList.toggle("on",a.dataset.id===en.target.id.slice(2))});
+    var on=document.querySelector("#chips a.on");if(on)on.scrollIntoView({inline:"center",block:"nearest"})}})},{rootMargin:"-130px 0px -70% 0px"});
+  document.querySelectorAll("main section").forEach(function(s){io.observe(s)});
+}
+
+/* корзина */
+function lines(){return Object.keys(cart).map(function(k){var c=cart[k],it=items[c.id];return it?{k:k,it:it,opt:c.opt,q:c.q,sum:it.price*c.q}:null}).filter(Boolean)}
+function total(){return lines().reduce(function(s,l){return s+l.sum},0)}
+function count(){return lines().reduce(function(s,l){return s+l.q},0)}
+function bar(){var n=count();$("bar").hidden=!n;$("cnt").textContent=n;$("sum").textContent=fmt(total());if(!$("layer").hidden)drawCart()}
+function drawCart(){
+  var L=lines();
+  if(!L.length){close();return}
+  $("rows").innerHTML=L.map(function(l){return '<div class="row" data-k="'+esc(l.k)+'"><div class="n">'+esc(l.it.name)+(l.opt?"<small>"+esc(l.opt)+"</small>":"")+'</div><span class="qty"><button data-a="-">−</button><span>'+l.q+'</span><button data-a="+">+</button></span><div class="s">'+fmt(l.sum)+"</div></div>"}).join("");
+  $("tot").textContent=fmt(total());
+  var hasK=!!C.kaspiUrl;
+  $("kaspi").hidden=!hasK;$("cash").hidden=!hasK&&true;
+  $("kaspi").textContent="1. Оплатить "+fmt(total())+" через Kaspi";
+  $("send").textContent=hasK?"2. Я оплатил(а) — отправить заказ":"Отправить заказ — оплата на кассе";
+  $("send").disabled=hasK&&!paid;
+  $("cash").hidden=!hasK;
+  $("paynote").textContent=hasK
+    ?"Сначала оплатите в Kaspi — в приложении укажите сумму "+fmt(total())+(C.kaspiPhone?" (получатель "+C.kaspiPhone+")":"")+", затем вернитесь и отправьте заказ."
+    :"Заказ уйдёт на кассу. Оплатить можно картой, наличными или Kaspi на кассе.";
+}
+$("rows").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;var k=b.closest(".row").dataset.k;if(!cart[k])return;
+  cart[k].q+=b.dataset.a==="+"?1:-1;if(cart[k].q<=0)delete cart[k];
+  paid=false;save();bar();document.querySelectorAll(".item").forEach(paint);
+});
+function open(){$("layer").hidden=false;drawCart();document.body.style.overflow="hidden"}
+function close(){$("layer").hidden=true;document.body.style.overflow=""}
+$("open").onclick=open;$("close").onclick=close;$("bg").onclick=close;
+
+function toast(t){var el=$("toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){el.hidden=true},2600)}
+$("kaspi").onclick=function(){
+  try{navigator.clipboard&&navigator.clipboard.writeText(String(total()))}catch(e){}
+  paid=true;drawCart();toast("Сумма "+fmt(total())+" скопирована");
+  window.open(C.kaspiUrl,"_blank","noopener");
+};
+function orderText(isPaid){
+  var t=$("t2").value||"—",L=lines(),s="🍜 Заказ ToKpokki Go\nСтол: "+t;
+  if($("name").value)s+="\nИмя: "+$("name").value;
+  s+="\n\n"+L.map(function(l){return "• "+l.it.name+(l.opt?" ("+l.opt+")":"")+" × "+l.q+" — "+fmt(l.sum)}).join("\n");
+  s+="\n\nИтого: "+fmt(total())+"\nОплата: "+(isPaid?"Kaspi (гость сообщил об оплате)":"на кассе");
+  if($("cm").value)s+="\nКомментарий: "+$("cm").value;
+  return s;
+}
+function submit(isPaid){
+  if(!$("t2").value){$("t2").focus();toast("Укажите номер стола");return}
+  var url="https://wa.me/"+C.orderWhatsApp+"?text="+encodeURIComponent(orderText(isPaid));
+  window.open(url,"_blank","noopener");
+  if(confirm("Заказ отправлен? Очистить корзину?")){cart={};save();paid=false;close();bar();document.querySelectorAll(".item").forEach(paint)}
+}
+$("send").onclick=function(){submit(!!C.kaspiUrl)};
+$("cash").onclick=function(){submit(false)};
+
+render();bar();
+})();
+</script>
+</body>
+</html>
