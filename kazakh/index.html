@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Қазақша — тренажёр казахского языка</title>
+<meta name="description" content="Личный тренажёр казахского для начинающих: уроки по темам, интервальное повторение, словарь и грамматика.">
+<meta name="theme-color" content="#00a3bd">
+<style>
+  /* Цвета те же, что на главной sakenov.kz: небесно-голубой и золото. Слева меню (на телефоне — снизу), справа один экран. */
+  :root {
+    --bg: #f3f6f7; --card: #fff; --text: #12191c; --muted: #5d6b70; --line: #dde5e8;
+    --sky: #008fa6; --sky-soft: #e0f4f7; --gold: #f2b705; --ok: #1a8f4c; --ok-soft: #e3f5ea; --bad: #c8372d; --bad-soft: #fbe9e7;
+    --shadow: 0 1px 2px rgba(10,40,50,.05), 0 8px 24px rgba(10,40,50,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1316; --card: #151d21; --text: #eef3f5; --muted: #93a3a9; --line: #263338;
+      --sky: #2cc3dc; --sky-soft: #12323a; --gold: #f5c430; --ok: #4cc47f; --ok-soft: #143122; --bad: #f0776d; --bad-soft: #3a1b18;
+      --shadow: none; color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+  button, input, select { font: inherit; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 16px; letter-spacing: -.02em; text-wrap: balance; }
+  h1 small { font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+  h2 { font-size: 19px; margin: 28px 0 8px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); } .small { font-size: 13px; } .grow { flex: 1; min-width: 0; }
+  .center { text-align: center; }
+
+  .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+  nav { position: sticky; top: 0; height: 100vh; padding: 24px 12px; border-right: 1px solid var(--line); background: var(--card); display: flex; flex-direction: column; gap: 4px; }
+  .logo { font-weight: 800; font-size: 20px; padding: 0 12px 18px; letter-spacing: -.02em; }
+  .logo i { font-style: normal; color: var(--gold); }
+  nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; }
+  nav a .e { font-size: 18px; }
+  nav a:hover { background: var(--bg); }
+  nav a.on { background: var(--sky-soft); color: var(--sky); }
+  #due-badge { margin-left: auto; background: var(--gold); color: #12191c; font-size: 12px; border-radius: 99px; padding: 0 7px; line-height: 20px; }
+  main { padding: 32px 24px 64px; max-width: 820px; width: 100%; margin: 0 auto; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); margin-bottom: 14px; }
+  .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .card > .row:last-child, .hero .row { margin-bottom: 0; }
+  .center-row { justify-content: center; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); font-weight: 650; cursor: pointer; }
+  .btn:hover { border-color: var(--sky); }
+  .btn.primary { background: var(--sky); border-color: var(--sky); color: #fff; }
+  @media (prefers-color-scheme: dark) { .btn.primary { color: #06181c; } }
+  .btn.danger { color: var(--bad); }
+  .btn.wide { width: 100%; margin-top: 16px; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .bar { height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+  .bar i { display: block; height: 100%; background: var(--sky); border-radius: 99px; transition: width .3s; }
+
+  .hero { display: grid; gap: 16px; border-bottom: 4px solid var(--gold); }
+  .goal-line { font-size: 17px; } .goal-line b { font-size: 26px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  .stat { margin: 0; padding: 14px; display: grid; gap: 2px; }
+  .stat b { font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat small { color: var(--muted); font-size: 13px; line-height: 1.3; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .lvl, .wod { font-size: 24px; font-weight: 750; } .lvl small { font-size: 14px; color: var(--muted); font-weight: 500; }
+  .chart { display: flex; gap: 8px; align-items: flex-end; height: 140px; padding-top: 8px; }
+  .col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%; font-size: 12px; color: var(--muted); }
+  .stack { width: 100%; max-width: 44px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 3px; background: var(--line); border-radius: 6px; overflow: hidden; }
+  .stack i { display: block; } i.n { background: var(--sky); } i.r { background: var(--gold); }
+  .legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+  .settings summary, .gram summary { cursor: pointer; font-weight: 650; }
+  .settings[open] summary, .gram[open] summary { margin-bottom: 12px; }
+  select, input[type=search], .add input { min-height: 44px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); }
+
+  .topics { display: grid; gap: 10px; }
+  .topic { display: flex; align-items: center; gap: 14px; margin: 0; transition: border-color .15s; }
+  .topic:hover { border-color: var(--sky); }
+  .ic { font-size: 28px; width: 44px; text-align: center; }
+  .cnt { font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 44px; text-align: right; }
+  .back { display: inline-block; color: var(--sky); font-weight: 600; margin-bottom: 10px; }
+  .list { padding: 4px 18px; }
+  .li { display: flex; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+  .li:last-child { border-bottom: 0; }
+  .badge { font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 99px; background: var(--bg); color: var(--muted); white-space: nowrap; }
+  .badge.learn { background: var(--sky-soft); color: var(--sky); } .badge.done { background: var(--ok-soft); color: var(--ok); }
+  .filters { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 14px; }
+  .filters input, .filters select { width: 100%; min-width: 0; }
+  .add input { flex: 1 1 160px; min-width: 0; }
+  .x { border: 0; background: none; color: var(--muted); font-size: 18px; cursor: pointer; width: 40px; height: 40px; border-radius: 10px; }
+  .x:hover { background: var(--bg); }
+  .spk { display: none; border: 0; background: none; cursor: pointer; font-size: .8em; padding: 2px 4px; vertical-align: middle; }
+  .tts .spk { display: inline-block; }
+
+  .letters { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+  .letter { margin: 0; } .letter .l { font-size: 34px; font-weight: 800; color: var(--sky); line-height: 1.1; margin-bottom: 6px; }
+  .ex { padding: 5px 0; border-top: 1px dashed var(--line); font-size: 15px; }
+
+  .ses-head { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+  .ses-head .bar { flex: 1; margin: 0; height: 10px; }
+  .hint { color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .prompt { font-size: 32px; font-weight: 750; line-height: 1.2; margin-bottom: 24px; overflow-wrap: anywhere; }
+  .word-card { padding: 48px 18px; }
+  .word-card .kk { font-size: 38px; font-weight: 800; line-height: 1.2; overflow-wrap: anywhere; } .word-card .ru { font-size: 20px; color: var(--muted); margin-top: 10px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { display: flex; align-items: center; gap: 12px; text-align: left; min-height: 56px; padding: 12px 16px; border-radius: 14px; border: 2px solid var(--line); background: var(--card); font-size: 17px; cursor: pointer; }
+  .opt span { flex: none; width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--line); font-size: 13px; display: grid; place-items: center; color: var(--muted); }
+  .opt:hover:not(:disabled) { border-color: var(--sky); }
+  .opt.ok { border-color: var(--ok); background: var(--ok-soft); } .opt.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .opt:disabled { cursor: default; color: inherit; }
+  .ty { width: 100%; font-size: 22px; padding: 14px 16px; border-radius: 14px; border: 2px solid var(--line); background: var(--card); }
+  .ty:focus { outline: none; border-color: var(--sky); }
+  .keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .keys button { min-width: 42px; height: 42px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); font-size: 18px; cursor: pointer; }
+  .fb { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 18px; padding: 14px 16px; border-radius: 14px; }
+  .fb.ok { background: var(--ok-soft); } .fb.ok b { color: var(--ok); } .fb.bad { background: var(--bad-soft); } .fb.bad b { color: var(--bad); }
+  .fb-word { font-size: 17px; overflow-wrap: anywhere; }
+  .big-emoji { font-size: 52px; line-height: 1.2; }
+  .fin { padding: 40px 18px; } .fin h2, .center h2 { margin-top: 8px; }
+  .in-session nav { display: none; } .in-session .app { grid-template-columns: 1fr; } .in-session main { max-width: 600px; }
+
+  @media (max-width: 860px) {
+    .app { display: block; }
+    nav { position: fixed; top: auto; bottom: 0; left: 0; right: 0; height: auto; flex-direction: row; padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)); border-right: 0; border-top: 1px solid var(--line); z-index: 5; gap: 0; }
+    .logo { display: none; }
+    nav a { flex: 1; flex-direction: column; gap: 0; font-size: 11px; padding: 4px 2px; position: relative; min-width: 0; }
+    #due-badge { position: absolute; top: 0; left: calc(50% + 6px); margin: 0; }
+    main { padding: 20px 16px 96px; }
+    .in-session main { padding-bottom: 32px; }
+    h1 { font-size: 24px; } h1 small { display: block; margin: 2px 0 0; }
+    .stats { grid-template-columns: 1fr 1fr; } .grid2 { grid-template-columns: 1fr; gap: 0; }
+    .filters { grid-template-columns: 1fr 1fr; } .filters input { grid-column: 1 / -1; }
+    .prompt { font-size: 26px; } .word-card .kk { font-size: 30px; }
+    .btn { flex: 1 1 auto; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav aria-label="Разделы">
+    <div class="logo">Қазақша<i>.</i></div>
+    <a href="#home"><span class="e">🏠</span>Сегодня</a>
+    <a href="#lessons"><span class="e">📖</span>Уроки</a>
+    <a href="#review"><span class="e">🔁</span>Повторение<span id="due-badge" hidden></span></a>
+    <a href="#dict"><span class="e">📚</span>Словарь</a>
+    <a href="#ref"><span class="e">🔤</span>Справочник</a>
+  </nav>
+  <main id="view"></main>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
